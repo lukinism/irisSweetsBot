@@ -4,7 +4,7 @@ from aiogram import Bot, Dispatcher
 from config import BOT_TOKEN
 from services.iris_api import iris
 from services.telethon_client import telethon_client
-from handlers import balance, history, send_sweets
+from handlers import balance, history, send_sweets, send_gold, pocket_settings, pocket_permissions
 
 logging.basicConfig(
     level=logging.INFO,
@@ -21,6 +21,9 @@ dp.include_routers(
     balance.router,
     history.router,
     send_sweets.router,
+    send_gold.router,
+    pocket_settings.router,
+    pocket_permissions.router,
 )
 
 

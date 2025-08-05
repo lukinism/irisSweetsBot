@@ -9,11 +9,13 @@ router = Router()
 async def cmd_balance(message: types.Message):
     try:
         data = await iris.balance()
+        gold = data.get("gold", "Не удалось получить голду")
         sweets = data.get("sweets", "Не удалось получить ириски")
         donate_score = data.get("donate_score", "Не удалось получить очки доната")
 
         await message.answer(
             f"📊 *Ваш баланс:*\n\n"
+            f"🌕 Голда: {gold}\n"
             f"🍬 Ириски: {sweets}\n"
             f"🎖 Донатные очки: {donate_score}",
             parse_mode="Markdown"

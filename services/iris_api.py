@@ -35,20 +35,48 @@ class IrisAPI:
         except Exception as e:
             raise Exception(f"Ошибка связи с IRIS API: {e}")
 
+
+    async def balance(self):
+        return await self._request("pocket/balance")
+
     async def give_sweets(self, user_id: int, sweets: int, comment: str = ""):
         params = {
             "user_id": user_id,
             "sweets": sweets,
             "comment": comment
         }
-        return await self._request("give_sweets", params)
+        return await self._request("pocket/sweets/give", params)
 
-    async def balance(self):
-        return await self._request("balance")
 
-    async def history(self, offset: int = 0):
+    async def history_sweets(self, offset: int = 0):
         params = {"offset": offset}
-        return await self._request("history", params)
+        return await self._request("pocket/sweets/history", params)
+
+    async def give_gold(self, user_id: int, gold: int, comment: str = ""):
+        params = {
+            "user_id": user_id,
+            "gold": gold,
+            "comment": comment
+        }
+        return await self._request("pocket/gold/give", params)
+
+    async def history_gold(self, offset: int = 0):
+        params = {"offset": offset}
+        return await self._request("pocket/gold/history", params)
+
+    async def enable_pocket(self):
+        return await self._request("pocket/enable")
+
+    async def disable_pocket(self):
+        return await self._request("pocket/disable")
+
+    async def allow_user(self, user_id: int):
+        params = {"user_id": user_id}
+        return await self._request("pocket/allow_user", params)
+
+    async def deny_user(self, user_id: int):
+        params = {"user_id": user_id}
+        return await self._request("pocket/deny_user", params)
 
     async def close(self):
         if self.session and not self.session.closed:
